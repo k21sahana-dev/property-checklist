@@ -396,6 +396,25 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
 
                             </div>
 
+                            <div class="detail">
+
+                                <div class="label">
+                                    Remarks
+                                </div>
+                            
+                                <div 
+                                    contenteditable="true"
+                                    onblur="updateField(
+                                        '${docItem.id}',
+                                        'remarks',
+                                        this.innerText
+                                    )"
+                                >
+                                    ${data.remarks || "-"}
+                                </div>
+                            
+                            </div>
+
                         </div>
 
                         <button
