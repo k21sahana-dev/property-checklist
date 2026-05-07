@@ -210,8 +210,7 @@ import {
     addDoc,
     onSnapshot,
     deleteDoc,
-    doc,
-    updateDoc
+    doc
 
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
@@ -322,12 +321,6 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
 
                         <div 
                             class="property"
-                            contenteditable="true"
-                            onblur="updateField(
-                                '${docItem.id}',
-                                'property',
-                                this.innerText
-                            )"
                             style="
                                 ${data.completed 
                                     ? 'text-decoration:line-through;opacity:0.6;' 
@@ -345,14 +338,7 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
                                     Name
                                 </div>
 
-                                <div 
-                                    contenteditable="true"
-                                    onblur="updateField(
-                                        '${docItem.id}',
-                                        'name',
-                                        this.innerText
-                                    )"
-                                >
+                                <div>
                                     ${data.name || "-"}
                                 </div>
 
@@ -364,14 +350,7 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
                                     Role
                                 </div>
 
-                                <div 
-                                    contenteditable="true"
-                                    onblur="updateField(
-                                        '${docItem.id}',
-                                        'role',
-                                        this.innerText
-                                    )"
-                                >
+                                <div>
                                     ${data.role || "-"}
                                 </div>
 
@@ -383,14 +362,7 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
                                     Phone
                                 </div>
 
-                                <div 
-                                    contenteditable="true"
-                                    onblur="updateField(
-                                        '${docItem.id}',
-                                        'phone',
-                                        this.innerText
-                                    )"
-                                >
+                                <div>
                                     ${data.phone || "-"}
                                 </div>
 
@@ -416,10 +388,20 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
     });
 
 });
-    
+
+
 // DELETE PROPERTY
 
 window.deleteProperty = async function(id){
+
+    await deleteDoc(doc(db, "properties", id));
+
+};
+
+import {
+    updateDoc
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 window.toggleComplete = async function(id, completed){
 
@@ -431,17 +413,6 @@ window.toggleComplete = async function(id, completed){
 
 };
 
-
-window.updateField = async function(id, field, value){
-
-    await updateDoc(doc(db, "properties", id), {
-
-        [field]: value
-
-    });
-
-};
-    
 </script>
 
 </body>
