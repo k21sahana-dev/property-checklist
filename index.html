@@ -184,6 +184,13 @@ button:hover{
             placeholder="Phone Number"
         >
 
+        <input 
+            type="text" 
+            id="remarks"
+            class="full"
+            placeholder="Remarks"
+        >
+
     </div>
 
     <button onclick="addProperty()">
@@ -256,6 +263,8 @@ window.addProperty = async function(){
 
     const phone = document.getElementById("phone").value.trim();
 
+    const remarks = document.getElementById("remarks").value.trim();
+
     if(property === ""){
 
         alert("Please enter property name.");
@@ -270,6 +279,7 @@ window.addProperty = async function(){
         name,
         role,
         phone,
+        remarks,
         createdAt: Date.now()
 
     });
@@ -283,6 +293,8 @@ window.addProperty = async function(){
     document.getElementById("role").value = "";
 
     document.getElementById("phone").value = "";
+
+    document.getElementById("remarks").value = "";
 
 };
 
