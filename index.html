@@ -321,13 +321,19 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
 
                         <div 
                             class="property"
+                            contenteditable="true"
+                            onblur="updateField(
+                                '${docItem.id}',
+                                'property',
+                                this.innerText
+                            )"
                             style="
                                 ${data.completed 
                                     ? 'text-decoration:line-through;opacity:0.6;' 
                                     : ''}
                             "
                         >
-                            ${data.property}
+                            ${data.property || ""}
                         </div>
 
                         <div class="details">
@@ -338,9 +344,17 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
                                     Name
                                 </div>
 
-                                <div>
+                                <div 
+                                    contenteditable="true"
+                                    onblur="updateField(
+                                        '${docItem.id}',
+                                        'name',
+                                        this.innerText
+                                    )"
+                                >
                                     ${data.name || "-"}
                                 </div>
+
 
                             </div>
 
@@ -350,7 +364,14 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
                                     Role
                                 </div>
 
-                                <div>
+                                <div 
+                                    contenteditable="true"
+                                    onblur="updateField(
+                                        '${docItem.id}',
+                                        'role',
+                                        this.innerText
+                                    )"
+                                >
                                     ${data.role || "-"}
                                 </div>
 
@@ -362,7 +383,14 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
                                     Phone
                                 </div>
 
-                                <div>
+                                <div 
+                                    contenteditable="true"
+                                    onblur="updateField(
+                                        '${docItem.id}',
+                                        'phone',
+                                        this.innerText
+                                    )"
+                                >
                                     ${data.phone || "-"}
                                 </div>
 
@@ -395,6 +423,16 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
 window.deleteProperty = async function(id){
 
     await deleteDoc(doc(db, "properties", id));
+
+};
+
+window.updateField = async function(id, field, value){
+
+    await updateDoc(doc(db, "properties", id), {
+
+        [field]: value
+
+    });
 
 };
 
