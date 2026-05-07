@@ -288,7 +288,6 @@ window.addProperty = async function(){
 
 
 // LIVE REALTIME SYNC
-
 onSnapshot(collection(db, "properties"), (snapshot) => {
 
     list.innerHTML = "";
@@ -303,9 +302,31 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
 
                 <div class="top">
 
+                    <input 
+                        type="checkbox"
+                        ${data.completed ? "checked" : ""}
+                        onchange="toggleComplete(
+                            '${docItem.id}',
+                            this.checked
+                        )"
+                        style="
+                            width:20px;
+                            height:20px;
+                            margin-top:5px;
+                            cursor:pointer;
+                        "
+                    >
+
                     <div class="content">
 
-                        <div class="property">
+                        <div 
+                            class="property"
+                            style="
+                                ${data.completed 
+                                    ? 'text-decoration:line-through;opacity:0.6;' 
+                                    : ''}
+                            "
+                        >
                             ${data.property}
                         </div>
 
@@ -374,6 +395,21 @@ onSnapshot(collection(db, "properties"), (snapshot) => {
 window.deleteProperty = async function(id){
 
     await deleteDoc(doc(db, "properties", id));
+
+};
+
+import {
+    updateDoc
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+window.toggleComplete = async function(id, completed){
+
+    await updateDoc(doc(db, "properties", id), {
+
+        completed: completed
+
+    });
 
 };
 
